@@ -1,0 +1,12 @@
+.MuiOutlinedInput-root {
+    height: 40px;
+}
+
+.MuiTextField-root {
+    /* padding-top: 10px !important; */
+    width: 95%;
+}
+
+.MuiSelect-select.MuiSelect-select {
+    padding: 8px;
+}

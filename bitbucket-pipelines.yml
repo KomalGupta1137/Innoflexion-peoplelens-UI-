@@ -1,0 +1,24 @@
+definitions:
+  steps:
+    - step: &build-image
+        name: Build UI Production Files
+        image: node:14.7.0
+        script:
+          - npm install
+          - CI=false npm run build
+        artifacts:
+          - build/**
+    - step: &firebase-deploy
+        name: Deploy to Firebase
+        deployment: production
+        script:
+          - pipe: atlassian/firebase-deploy:0.2.1
+            variables:
+              FIREBASE_TOKEN: $FIREBASE_TOKEN_FIRCO
+              PROJECT_ID: $FIREBASE_PROJECT_FIRCO
+
+pipelines:
+  custom:
+    dev:
+      - step: *build-image
+      - step: *firebase-deploy

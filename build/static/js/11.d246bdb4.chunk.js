@@ -1,0 +1,2 @@
+(this["webpackJsonppl-ui"]=this["webpackJsonppl-ui"]||[]).push([[11],{873:function(e,t,p){"use strict";p.r(t);var n=p(1),s=p(144),u=p(35),o=p(0);t.default=function(){var e=Object(s.b)().logout;return Object(n.useEffect)((function(){e({returnTo:"https://peoplelens-pov-1-0.peoplelens.ai/"})}),[e]),Object(o.jsx)(u.a,{})}}}]);
+//# sourceMappingURL=11.d246bdb4.chunk.js.map

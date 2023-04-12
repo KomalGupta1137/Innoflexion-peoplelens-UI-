@@ -1,0 +1,144 @@
+{
+  "name": "pl-ui",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@apollo/client": "^3.3.15",
+    "@auth0/auth0-react": "^1.4.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
+    "@mui/material": "^5.11.2",
+    "@mui/x-date-pickers": "^5.0.11",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react-dom": "^17.0.0",
+    "bootstrap": "^5.2.3",
+    "d3-scale-chromatic": "^2.0.0",
+    "date-fns": "^2.22.1",
+    "date-fns-tz": "^1.1.4",
+    "dayjs": "^1.11.7",
+    "graphql": "^15.5.0",
+    "highcharts": "^9.0.1",
+    "highcharts-border-radius": "0.0.4",
+    "highcharts-react-official": "^3.0.0",
+    "highcharts-regression": "^2.2.0",
+    "i18next": "^20.2.1",
+    "i18next-browser-languagedetector": "^6.1.0",
+    "i18next-http-backend": "^1.2.1",
+    "json-server": "^0.16.3",
+    "jwt-decode": "^3.1.2",
+    "lodash-es": "^4.17.21",
+    "material-ui-popup-state": "^1.8.3",
+    "moment": "^2.29.4",
+    "numeral": "^2.0.6",
+    "query-string": "^7.0.0",
+    "react": "^17.0.2",
+    "react-circular-progressbar": "^2.0.4",
+    "react-dom": "^17.0.2",
+    "react-edit-text": "^5.0.2",
+    "react-ga": "^3.3.1",
+    "react-i18next": "^11.8.13",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "redis": "^3.1.2",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.1.3",
+    "typescript": "^4.1.2",
+    "web-vitals": "^1.0.1",
+    "winston": "^3.3.3",
+    "winston-transport-browserconsole": "^1.0.5"
+  },
+  "scripts": {
+    "start": "PORT=8080 DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public",
+    "download:schema": "apollo client:download-schema ./src/gql/schema.json --endpoint=http://localhost:4000/api/gql?i",
+    "build:gen": "apollo client:codegen --localSchemaFile=src/gql/schema.json --target=typescript --includes=./src/**/*.ts --tagName=gql --addTypename ./src/gql/types.ts --outputFlat",
+    "format": "prettier --write src/**/*.{ts,tsx}",
+    "lint": "tsc --noEmit && eslint -c .eslintrc.json --no-error-on-unmatched-pattern src/**/*.{ts,tsx}",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./src/**/*.{js,jsx,ts,tsx}": [
+      "npm run format",
+      "eslint -c .eslintrc.json --fix"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.2.8",
+    "@storybook/addon-essentials": "^6.2.8",
+    "@storybook/addon-knobs": "^6.2.8",
+    "@storybook/addon-links": "^6.2.8",
+    "@storybook/node-logger": "^6.2.8",
+    "@storybook/preset-create-react-app": "^3.1.7",
+    "@storybook/react": "6.2.8",
+    "@types/d3-scale-chromatic": "^2.0.0",
+    "@types/highcharts": "^7.0.0",
+    "@types/lodash-es": "^4.17.4",
+    "@types/numeral": "^2.0.1",
+    "@types/query-string": "^6.3.0",
+    "@types/react": "^17.0.5",
+    "@types/react-edit-text": "^5.0.1",
+    "@types/react-router": "^5.1.13",
+    "@types/react-router-dom": "^5.1.7",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "apollo": "^2.32.5",
+    "eslint": "^7.24.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-graphql": "^4.0.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^10.5.4",
+    "path": "^0.12.7",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0"
+  },
+  "proxy": "http://localhost:4000/"
+}

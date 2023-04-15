@@ -256,6 +256,8 @@ const AdminDashboard: React.FC = () => {
   const [openUserList, setOpenUserList] = useState(false)
   const [openEditUser, setOpenEditUser] = useState(false)
   const [saving, setSaving] = useState(false);
+  const [userSaving, setUserSaving] = useState(false)
+  const [userListSaving, setUserListSaving] = useState(false)
   const [progressValue, setProgressValue] = useState(50);
   const [startDate, setStartDate] = React.useState<Dayjs | null>(null);
   const [endDate, setEndDate] = React.useState<Dayjs | null>(null);
@@ -265,8 +267,8 @@ const AdminDashboard: React.FC = () => {
   const [system, setSystem] = useState('');
   const [file, setFile] = useState<any>('');
   const [userFile, setUserFile] = useState<any>('')
-  const [userName, setUserName] = useState<any>('');
-  const [email, setEmail] = useState<any>('');
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
   const [user, setUser] = useState<any>('');
   const [role, setRole] = useState<any>('');
   const [permission, setPermission] = useState<any>('');
@@ -286,7 +288,7 @@ const AdminDashboard: React.FC = () => {
     setFile(event.target.files[0]);
   }
 
-  function handleUserFileChange(event:any) {
+  function handleUserFileChange(event: any) {
     setUserFile(event.target.files[0])
   }
 
@@ -304,12 +306,12 @@ const AdminDashboard: React.FC = () => {
 
   function usersListButtonClick(): void {
     setOpenUserList(true);
-    setSaving(false);
+    setUserListSaving(false);
   }
 
   function usersButtonClick(): void {
     setOpenUser(true);
-    setSaving(false)
+    setUserSaving(false)
   }
 
   function editButtonClick(): void {
@@ -357,7 +359,18 @@ const AdminDashboard: React.FC = () => {
     setReportName(e.target.value);
   };
 
-  const handleUserChange = (e: any)  => {
+  const handleUserNameChange = (e: any) => {
+    console.log(e.target.value);
+    setUserName(e.target.value)
+
+  }
+
+  const handleEmailChange = (e: any) => {
+    console.log(e.target.value);
+    setEmail(e.target.value)
+  }
+
+  const handleUserChange = (e: any) => {
     setUser(e.target.value)
   }
 
@@ -469,6 +482,42 @@ const AdminDashboard: React.FC = () => {
         }
       }
     });
+  }
+
+  async function handleUserSaveClick() {
+    setUserSaving(true)
+    await fetch(`${process.env.REACT_APP_API_BASE || ''}/api/insertAdminUsers`, {
+      method: 'POST',
+      body: JSON.stringify({
+        userName:userName,
+        email:email
+      }),
+    }).then((res) => {
+      console.log("res", res)
+      if (res.status == 200) {
+        setUserSaving(false);
+        setOpenUser(false);
+        setUserName('')
+        setEmail('')
+      }
+    })
+  }
+
+  async function handleUserListSaveClick() {
+    setUserListSaving(true)
+    const formData = new FormData()
+    formData.append('file', userFile);
+    formData.append('fileName', userFile.name)
+    await fetch(`${process.env.REACT_APP_API_BASE || ''}/api/insertAdminUsersList`, {
+      method: 'POST',
+      body: formData,
+    }).then((res) => {
+      console.log(res.status)
+      if (res.status == 200) {
+        setUserListSaving(false);
+        setOpenUserList(false);
+      }
+    })
   }
 
   const handleTabChange = (num: number) => {
@@ -2361,6 +2410,7 @@ const AdminDashboard: React.FC = () => {
                   color="primary"
                   variant="contained"
                   className={classes.continueButton}
+                  onClick={handleUserListSaveClick}
                 >
                   Save
                 </Button>
@@ -2451,7 +2501,7 @@ const AdminDashboard: React.FC = () => {
                     fontWeight: 500,
                     fontSize: 14,
                   }}
-                  onChange={handleReportNameChange}
+                  onChange={handleUserNameChange}
                 ></input>
               </Grid>
               <Grid
@@ -2473,7 +2523,7 @@ const AdminDashboard: React.FC = () => {
                     fontWeight: 500,
                     fontSize: 14,
                   }}
-                  onChange={handleReportNameChange}
+                  onChange={handleEmailChange}
                 ></input>
               </Grid>
               <Grid container style={{ justifyContent: "center", marginTop: '5%', marginBottom: '7%' }}>
@@ -2482,6 +2532,7 @@ const AdminDashboard: React.FC = () => {
                   color="primary"
                   variant="contained"
                   className={classes.continueButton}
+                  onClick={handleUserSaveClick}
                 >
                   Save
                 </Button>
@@ -2537,8 +2588,8 @@ const AdminDashboard: React.FC = () => {
                   {_t_('Edit User')}
                 </Typography>
               </Grid>
-              <Grid 
-              item
+              <Grid
+                item
                 style={{ alignSelf: 'center' }}>
                 <Typography className={`${classes.subTitle}`}>
                   Update any details below
@@ -2604,7 +2655,7 @@ const AdminDashboard: React.FC = () => {
                     },
                     getContentAnchorEl: null,
                   }}
-                
+
                 >
                   {rolesData.map((roles) => {
                     return (
